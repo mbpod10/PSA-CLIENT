@@ -85,3 +85,8 @@ h1 .fa-film {
   cursor: pointer;
   font-size: 1.5rem;
 }
+
+.error {
+  color: red;
+  background-color: yellow;
+}

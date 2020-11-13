@@ -14,6 +14,7 @@ const Navbar = () => {
     console.log('Logout')
     deleteToken(['psa-token'])
     deleteToken(['psa-name'])
+    window.location.href = '/login'
   }
 
 

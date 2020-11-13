@@ -12,7 +12,7 @@ export class API {
       })
   }
   static register(body) {
-    return axios.post(`${apiUrl}/api/users/`,
+    return axios.post(`${apiUrl}/api/users/register/`,
       body,
       {
         headers: {
