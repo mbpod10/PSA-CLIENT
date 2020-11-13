@@ -2,7 +2,7 @@ import axios from "axios"
 import apiUrl from "./APIConfig"
 
 export class API {
-  static loginClicked(body) {
+  static login(body) {
     return axios.post(`${apiUrl}/api/users/login/`,
       body,
       {
@@ -11,7 +11,7 @@ export class API {
         }
       })
   }
-  static registerClicked(body) {
+  static register(body) {
     return axios.post(`${apiUrl}/api/users/`,
       body,
       {

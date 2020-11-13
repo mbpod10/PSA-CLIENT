@@ -7,26 +7,29 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [isLoginView, setIsLoginView] = useState(true);
 
-  const [token, setToken] = useCookies(['mr-token']);
+  const [token, setToken] = useCookies(['psa-token']);
+  const [ResponseUsername, setResponseUsername] = useCookies(['psa-name']);
 
-  // useEffect(() => {
-  //   if (token['mr-token']) window.location.href = '/movies';
-  // }, [token])
+  useEffect(() => {
+    if (token['psa-token']) window.location.href = '/schedule';
+  }, [token])
 
-  const loginClicked = (event) => {
+  const login = (event) => {
     console.log("Login")
-    API.loginClicked({ username: username, password: password })
+    API.login({ username: username, password: password })
       .then((response) => {
-        setToken('mr-token', response.data.token)
+        console.log(response.data)
+        setToken('psa-token', response.data.token)
+        setResponseUsername('psa-name', response.data.user.username)
       })
       .catch((error) => {
         console.log(error)
       })
   }
 
-  const registerClicked = () => {
+  const register = () => {
     API.registerUser({ username, password })
-      .then(() => loginClicked())
+      .then(() => login())
       .catch(error => console.log(error))
   }
   const isDisabled = username.length === 0 || password.length === 0;
@@ -42,11 +45,11 @@ const Login = () => {
           onChange={evt => setUsername(evt.target.value)}
         /><br />
         <label htmlFor="password">Password</label><br />
-        <input id="password" type="password" placeholder="Descriptiom" value={password}
+        <input id="password" type="password" placeholder="password" value={password}
           onChange={evt => setPassword(evt.target.value)} /><br />
         {isLoginView ?
-          <button onClick={loginClicked} disabled={isDisabled}>Login</button> :
-          <button onClick={registerClicked} disabled={isDisabled}>Register</button>
+          <button onClick={login} disabled={isDisabled}>Login</button> :
+          <button onClick={register} disabled={isDisabled}>Register</button>
         }
         {isLoginView ?
           <p onClick={() => setIsLoginView(false)}>You don't have an account? Register here!</p> :
