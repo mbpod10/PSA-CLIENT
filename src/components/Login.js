@@ -9,15 +9,21 @@ const Login = () => {
 
   const [token, setToken] = useCookies(['mr-token']);
 
-  useEffect(() => {
-    if (token['mr-token']) window.location.href = '/movies';
-  }, [token])
+  // useEffect(() => {
+  //   if (token['mr-token']) window.location.href = '/movies';
+  // }, [token])
 
-  const loginClicked = () => {
-    API.loginUser({ username, password })
-      .then(resp => setToken('mr-token', resp.token))
-      .catch(error => console.log(error))
+  const loginClicked = (event) => {
+    console.log("Login")
+    API.loginClicked({ username: username, password: password })
+      .then((response) => {
+        setToken('mr-token', response.data.token)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
+
   const registerClicked = () => {
     API.registerUser({ username, password })
       .then(() => loginClicked())

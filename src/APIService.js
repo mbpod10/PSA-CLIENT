@@ -3,7 +3,7 @@ import apiUrl from "./APIConfig"
 
 export class API {
   static loginClicked(body) {
-    return axios.post(`${apiUrl}/auth/`,
+    return axios.post(`${apiUrl}/api/users/login/`,
       body,
       {
         headers: {
