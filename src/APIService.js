@@ -1,5 +1,5 @@
 import axios from "axios"
-import apiUrl from "../APIConfig"
+import apiUrl from "./APIConfig"
 
 export class API {
   static loginClicked(body) {
