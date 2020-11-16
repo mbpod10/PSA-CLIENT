@@ -9,4 +9,8 @@ npm install --save @fortawesome/react-fontawesome
 npm install react-cookie
 
 npm i axios 
+
+npm i moment
+
+git add . && git commit -m 'm' && git push origin master
 ```

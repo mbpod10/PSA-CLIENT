@@ -12,16 +12,16 @@ const Login = () => {
   const [token, setToken] = useCookies(['psa-token']);
   const [ResponseUsername, setResponseUsername] = useCookies(['psa-name']);
 
-  // useEffect(() => {
-  //   if (token['psa-token']) window.location.href = '/schedule';
-  // }, [token])
+  useEffect(() => {
+    if (token['psa-token']) window.location.href = '/schedule';
+  }, [token])
 
   const login = (event) => {
     console.log("Login")
     API.login({ username: username, password: password })
       .then((response) => {
         console.log(response.data)
-        if (!response.data.message) {
+        if (response.data.message === "LOGGED_IN") {
           setToken('psa-token', response.data.token)
           setResponseUsername('psa-name', response.data.user.username)
         }
@@ -39,7 +39,7 @@ const Login = () => {
     console.log("Register")
     API.register({ username: username, password: password })
       .then((response) => {
-        if (!response.data.message) {
+        if (response.data.message === "User Created") {
           login()
         } else {
           console.log(response.data.message)

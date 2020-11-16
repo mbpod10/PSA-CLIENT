@@ -4,7 +4,7 @@ import { Switch, Route } from "react-router-dom"
 import NavBar from "./components/NavBar"
 import Login from "./components/Login"
 import Home from './components/Home';
-import Schedule from "./components/Schedule"
+import Schedule from "./components/schedule/Schedule"
 import { useCookies } from 'react-cookie'
 
 
