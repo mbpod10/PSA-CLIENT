@@ -11,6 +11,8 @@ const ScheduleForm = (props) => {
   const [message, setMessage] = useState("")
   const [startTime, setStartTime] = useState(moment().format("HH:MM:SS"))
   const [endTime, setEndTime] = useState(moment().format("HH:MM:SS"))
+  const [trainers, setTrainers] = useState([])
+  const [selectedTrainer, setSelectedTrainer] = useState("")
 
   let appDate = props.dateClicked.format("YYYY-MM-DD")
 
@@ -81,14 +83,47 @@ const ScheduleForm = (props) => {
     setEndTime(temp)
   }
 
+  useEffect(() => {
+    axios.get(`http://127.0.0.1:8000/trainers/`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${token['psa-token']}`
+        }
+      })
+      .then((response) => {
+        // console.log(response)
+        setTrainers(response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
 
+  const trainerArray = trainers.map((element, index) => {
+    return (
+      <option value={index}>{parseInt(element.id)}. {element.full_name}</option>
+    )
+  })
+
+  const changeTrainer = (event) => {
+    setSelectedTrainer(event.target.value)
+    // console.log(event.target.value)
+    // let temp = event.target.value
+    // console.log(temp)
+  }
+
+  console.log(selectedTrainer)
   return (
     <>
       <div className="App">
         <header className="App-header"> Schedule </header>
         <div className="login-container">
+
+
           <label>Trainer</label>
-          <input type="text" onChange={onChange} /><br />
+          <select onChange={changeTrainer} value={selectedTrainer}> {trainerArray} </select>
+          <br /> <br />
 
           <label>Client</label>
           <input type="text" onChange={onChange} /><br />
