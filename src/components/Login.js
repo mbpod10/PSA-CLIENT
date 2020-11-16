@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { API } from '../APIService';
 import { useCookies } from 'react-cookie'
 import { faEraser } from '@fortawesome/free-solid-svg-icons';
+import axios from "axios"
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -26,6 +27,7 @@ const Login = () => {
           setToken('psa-token', response.data.token)
           setResponseUsername('psa-name', response.data.user.username)
           setResponseID('psa-id', response.data.user.id)
+
         }
         else {
           console.log(response.data.message)
@@ -52,6 +54,22 @@ const Login = () => {
         console.log(error)
       })
   }
+
+  // const FindUser = () => {
+  //   axios.get(`http://127.0.0.1:8000/clients/`,
+  //   )
+  //     .then((response) => {
+  //       console.log(response)
+  //     })
+  //     .catch((response) => {
+  //       console.log(response)
+  //     })
+  // }
+
+
+
+
+
   const isDisabled = username.length === 0 || password.length === 0;
 
   return (

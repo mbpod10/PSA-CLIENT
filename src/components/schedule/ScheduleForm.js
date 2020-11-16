@@ -12,7 +12,8 @@ const ScheduleForm = (props) => {
   const [startTime, setStartTime] = useState(moment().format("HH:MM:SS"))
   const [endTime, setEndTime] = useState(moment().format("HH:MM:SS"))
   const [trainers, setTrainers] = useState([])
-  const [selectedTrainer, setSelectedTrainer] = useState("")
+  const [selectedTrainer, setSelectedTrainer] = useState(1)
+  const [userId, setUserId] = useState(null)
 
   let appDate = props.dateClicked.format("YYYY-MM-DD")
 
@@ -21,8 +22,10 @@ const ScheduleForm = (props) => {
     axios.post('http://127.0.0.1:8000/appointments/book_app/',
       {
 
-        "trainer_id": `${token['psa-id']}`,
-        "client_id": 3,
+        // "trainer_id": `${token['psa-id']}`,
+        "trainer_id": selectedTrainer,
+        "client_id": userId,
+        // "client_id": `${token['psa-id']}`,
         "day": appDate,
         "start_time": startTime,
         "end_time": endTime,
@@ -102,18 +105,47 @@ const ScheduleForm = (props) => {
 
   const trainerArray = trainers.map((element, index) => {
     return (
-      <option value={index}>{parseInt(element.id)}. {element.full_name}</option>
+      <option value={element.id}>{element.full_name}</option>
     )
   })
 
   const changeTrainer = (event) => {
-    setSelectedTrainer(event.target.value)
-    // console.log(event.target.value)
-    // let temp = event.target.value
-    // console.log(temp)
+    setSelectedTrainer(parseInt(event.target.value, 10))
   }
 
-  console.log(selectedTrainer)
+
+  const [users, setUsers] = useState([])
+  useEffect(() => {
+    axios.get(`http://127.0.0.1:8000/clients/`,
+    )
+      .then((response) => {
+        // console.log(response.data)
+        // setUsers(response.data)
+        response.data.filter((element, index) => {
+          if (element.user.id === parseInt(token['psa-id'], 10)) {
+            return setUserId(element.id)
+          }
+        })
+      })
+      .catch((response) => {
+        console.log(response)
+      })
+  }, [])
+
+
+  console.log(userId)
+  // let thisUser = users.filter((element, index) => {
+  //   if (element.user.id === parseInt(token['psa-id'], 10)) {
+  //     return setUserId(thisUser.id)
+  //   }
+  // })
+
+  // console.log(thisUser)
+  // setUserId(thisUser.id)
+
+
+
+  // console.log(selectedTrainer)
   return (
     <>
       <div className="App">
@@ -122,11 +154,11 @@ const ScheduleForm = (props) => {
 
 
           <label>Trainer</label>
-          <select onChange={changeTrainer} value={selectedTrainer}> {trainerArray} </select>
+          <select onChange={changeTrainer}> {trainerArray} </select>
           <br /> <br />
 
-          <label>Client</label>
-          <input type="text" onChange={onChange} /><br />
+          {/* <label>Client</label>
+          <input type="text" onChange={onChange} /><br /> */}
 
           <label>Date</label>
           <input type="text" value={appDate} onChange={onChange} /><br />
