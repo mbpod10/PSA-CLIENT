@@ -11,6 +11,7 @@ const Login = () => {
 
   const [token, setToken] = useCookies(['psa-token']);
   const [ResponseUsername, setResponseUsername] = useCookies(['psa-name']);
+  const [ResponseID, setResponseID] = useCookies(['psa-id']);
 
   useEffect(() => {
     if (token['psa-token']) window.location.href = '/schedule';
@@ -24,6 +25,7 @@ const Login = () => {
         if (response.data.message === "LOGGED_IN") {
           setToken('psa-token', response.data.token)
           setResponseUsername('psa-name', response.data.user.username)
+          setResponseID('psa-id', response.data.user.id)
         }
         else {
           console.log(response.data.message)

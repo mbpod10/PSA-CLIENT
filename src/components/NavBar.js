@@ -22,7 +22,7 @@ const Navbar = () => {
     <>
       <nav>
         <div>
-          {ResponseUsername['psa-name'] ? <Link> Welcome {ResponseUsername['psa-name']} </Link> : null}
+          {ResponseUsername['psa-name'] ? <Link to='/'> Welcome {ResponseUsername['psa-name']} </Link> : null}
         </div>
         <div>
           <Link to='/'>Home</Link> {"  "}
