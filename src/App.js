@@ -6,6 +6,7 @@ import Login from "./components/Login"
 import Home from './components/Home';
 import Schedule from "./components/schedule/Schedule"
 import { useCookies } from 'react-cookie'
+import './styles.css'
 
 
 
