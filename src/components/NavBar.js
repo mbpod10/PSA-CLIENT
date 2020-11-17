@@ -9,11 +9,15 @@ import { useCookies } from 'react-cookie'
 const Navbar = () => {
   const [token, setToken, deleteToken] = useCookies(['psa-token']);
   const [ResponseUsername, setResponseUsername] = useCookies(['psa-name']);
+  const [ResponseID, setResponseID] = useCookies(['psa-id']);
+  const [name, setName] = useCookies(['psa-full_name'])
 
   const logout = (event) => {
     console.log('Logout')
     deleteToken(['psa-token'])
     deleteToken(['psa-name'])
+    deleteToken(['psa-full_name'])
+    deleteToken(['psa-id'])
     window.location.href = '/login'
   }
 

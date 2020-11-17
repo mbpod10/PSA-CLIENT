@@ -21,11 +21,8 @@ const ScheduleForm = (props) => {
 
     axios.post('http://127.0.0.1:8000/appointments/book_app/',
       {
-
-        // "trainer_id": `${token['psa-id']}`,
         "trainer_id": selectedTrainer,
         "client_id": userId,
-        // "client_id": `${token['psa-id']}`,
         "day": appDate,
         "start_time": startTime,
         "end_time": endTime,
@@ -95,7 +92,6 @@ const ScheduleForm = (props) => {
         }
       })
       .then((response) => {
-        // console.log(response)
         setTrainers(response.data)
       })
       .catch((error) => {
@@ -113,14 +109,10 @@ const ScheduleForm = (props) => {
     setSelectedTrainer(parseInt(event.target.value, 10))
   }
 
-
-  const [users, setUsers] = useState([])
   useEffect(() => {
     axios.get(`http://127.0.0.1:8000/clients/`,
     )
       .then((response) => {
-        // console.log(response.data)
-        // setUsers(response.data)
         response.data.filter((element, index) => {
           if (element.user.id === parseInt(token['psa-id'], 10)) {
             return setUserId(element.id)
@@ -132,20 +124,6 @@ const ScheduleForm = (props) => {
       })
   }, [])
 
-
-  console.log(userId)
-  // let thisUser = users.filter((element, index) => {
-  //   if (element.user.id === parseInt(token['psa-id'], 10)) {
-  //     return setUserId(thisUser.id)
-  //   }
-  // })
-
-  // console.log(thisUser)
-  // setUserId(thisUser.id)
-
-
-
-  // console.log(selectedTrainer)
   return (
     <>
       <div className="App">
@@ -156,9 +134,6 @@ const ScheduleForm = (props) => {
           <label>Trainer</label>
           <select onChange={changeTrainer}> {trainerArray} </select>
           <br /> <br />
-
-          {/* <label>Client</label>
-          <input type="text" onChange={onChange} /><br /> */}
 
           <label>Date</label>
           <input type="text" value={appDate} onChange={onChange} /><br />

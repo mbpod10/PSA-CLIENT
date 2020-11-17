@@ -7,16 +7,22 @@ import axios from "axios"
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [full_name, setFullName] = useState('')
+  const [userID, setUserId] = useState(null)
   const [isLoginView, setIsLoginView] = useState(true);
   const [error, setError] = useState(null)
+  const [go, setGo] = useState(null)
+
 
   const [token, setToken] = useCookies(['psa-token']);
   const [ResponseUsername, setResponseUsername] = useCookies(['psa-name']);
   const [ResponseID, setResponseID] = useCookies(['psa-id']);
 
   useEffect(() => {
-    if (token['psa-token']) window.location.href = '/schedule';
+    if (token['psa-token']) window.location.href = '/verify-name';
   }, [token])
+
+
 
   const login = (event) => {
     console.log("Login")
@@ -41,10 +47,18 @@ const Login = () => {
 
   const register = (event) => {
     console.log("Register")
+    // if (!full_name) return setError("Please Provide Full Name")
+    // if (!full_name.includes(" ")) return setError("Please Provide Full Name")
+    console.log((!full_name.includes(" ")))
     API.register({ username: username, password: password })
       .then((response) => {
         if (response.data.message === "User Created") {
+          // login()
+          console.log(response.data)
+          setUserId(response.data.user.id)
           login()
+          // setTimeout(postName(), 5000)
+          // postName()
         } else {
           console.log(response.data.message)
           setError(response.data.message)
@@ -55,17 +69,8 @@ const Login = () => {
       })
   }
 
-  // const FindUser = () => {
-  //   axios.get(`http://127.0.0.1:8000/clients/`,
-  //   )
-  //     .then((response) => {
-  //       console.log(response)
-  //     })
-  //     .catch((response) => {
-  //       console.log(response)
-  //     })
-  // }
-
+  // console.log(userID)
+  // console.log(full_name)
 
 
 
